@@ -1,0 +1,598 @@
+/* -----------------------------------------------------------
+   Wash.css — Premium, responsive, animation-ready stylesheet
+   Same visual vibe preserved. Optimized for GSAP + Locomotive.
+   ----------------------------------------------------------- */
+
+/* --------------- DESIGN TOKENS --------------- */
+:root{
+  /* colors */
+  --bg-main: #C4BCB3;
+  --bg-dark: #1C1C19;
+  --accent: #B43B12;
+  --muted: #4b4b4b;
+  --page-bg: #222;
+
+  /* typography */
+  --ff-domain: "domain", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --ff-canopee: "canopee", Georgia, "Times New Roman", serif;
+
+  /* spacing scale */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+
+  /* transitions */
+  --ease-slow: cubic-bezier(0.22,1,0.36,1);
+  --ease-fast: cubic-bezier(0.4,0,0.2,1);
+
+  /* shadows */
+  --shadow-soft: 0 10px 30px rgba(0,0,0,0.12);
+  --shadow-strong: 0 18px 50px rgba(0,0,0,0.18);
+}
+
+/* --------------- BASE --------------- */
+@font-face {
+  font-family: domain;
+  src: url('./domain.ttf') format('truetype');
+  font-weight: 100 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: canopee;
+  src: url('./canopee.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html,body { height: 100%; width: 100%; background: var(--page-bg); color: var(--bg-dark); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+
+/* helper classes for JS/GSAP */
+.js-anim { will-change: transform, opacity; }
+[data-scroll] { /* locomotive hook */ }
+
+/* --------------- LAYOUT WRAPPER --------------- */
+#main {
+  overflow-x: hidden;
+  background: var(--page-bg);
+  min-height: 100vh;
+  font-family: var(--ff-domain);
+}
+
+/* ---------------- NAV ---------------- */
+#nav{
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  height: clamp(72px, 8vh, 110px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 1rem;
+  padding: 0 clamp(18px, 4vw, 60px);
+  background: linear-gradient(180deg, var(--bg-main) 0%, rgba(196,188,179,0.85) 100%);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  backdrop-filter: blur(4px);
+}
+#nav h5 { font-family: var(--ff-domain); font-size: clamp(13px, 1.3vw, 18px); font-weight: 300; color: var(--bg-dark); letter-spacing: 0.6px; }
+#nav img { height: clamp(20px, 3.2vh, 36px); width: auto; object-fit: contain; }
+#nav i { font-size: clamp(18px, 2.4vw, 28px); cursor:pointer; color: var(--bg-dark); }
+
+/* ---------------- PAGE 1 ---------------- */
+#page1{
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-main);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding: clamp(28px, 4vh, 60px) clamp(12px, 4vw, 80px);
+  overflow: hidden;
+}
+
+/* Elems row (cards + center column) */
+#elems {
+  display:flex;
+  align-items:stretch;
+  gap: clamp(16px, 2vw, 40px);
+  width: 100%;
+  padding: 0;
+}
+
+/* each column */
+#elem1, #elem2, #elem3 {
+  flex: 1 1 0;
+  min-width: 260px;
+  display:flex;
+  flex-direction:column;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  justify-content:flex-start;
+}
+
+/* center column special */
+#elem2 { text-align:center; align-items:center; justify-content:center; padding: clamp(10px, 1.6vw, 28px); border-left:2px solid rgba(0,0,0,0.07); border-right:2px solid rgba(0,0,0,0.07); background: transparent; }
+
+/* image wrappers */
+#image-div { width:100%; aspect-ratio: 4/3; overflow:hidden; border-radius: 10px; box-shadow: var(--shadow-soft); background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.03)); }
+#image-div img { width:100%; height:100%; object-fit: cover; transition: transform 0.9s var(--ease-slow); will-change: transform; transform-origin:center center; }
+
+/* hover micro interaction (CSS fallback; GSAP will enhance) */
+#image-div:hover img { transform: scale(1.08) translateZ(0); filter: saturate(1.02) contrast(1.02); }
+
+/* text blocks */
+#elem1 h4, #elem3 h4 { font-family: var(--ff-canopee); font-size: clamp(18px, 1.8vw, 26px); font-weight: 300; color: var(--bg-dark); margin-top: 0.8rem; letter-spacing: 0.6px; }
+#elem1 h4 span, #elem3 h4 span { background: var(--accent); color: var(--bg-main); padding: 4px 8px; border-radius: 6px; font-weight: 400; margin-left: 8px; font-size: clamp(12px, 1vw, 16px); }
+#elem1 p, #elem3 p { font-family: var(--ff-domain); font-size: clamp(14px, 1.15vw, 20px); color: var(--muted); line-height: 1.45; margin-top: 0.6rem; }
+
+/* center texts */
+#elem2 h2 { font-family: var(--ff-canopee); font-size: clamp(36px, 6vw, 72px); font-weight: 200; color: var(--bg-dark); margin: 0; }
+#elem2 h3 { font-family: var(--ff-domain); font-size: clamp(20px, 2.2vw, 36px); color: #2f2f2f; margin-top: 1rem; font-weight: 300; line-height:1.1; }
+#elem2 h6 { font-family: var(--ff-domain); font-size: clamp(12px, 1vw, 16px); color: rgba(31,31,31,0.85); margin-top: 0.8rem; }
+
+
+
+
+
+/* ---------------- PAGE 2 (split layout) ---------------- */
+#page2 {
+  min-height: 110vh;
+  width: 100%;
+  background: var(--bg-main);
+  display: flex;
+  gap: clamp(20px, 3vw, 60px);
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(40px, 6vh, 90px) clamp(18px, 4vw, 80px);
+}
+
+/* left column */
+#page2-left {
+  width: clamp(32%, 34%, 38%);
+  padding-right: clamp(10px, 2vw, 40px);
+  border-right: 1px solid rgba(0,0,0,0.06);
+  display:flex;
+  flex-direction:column;
+  gap: 1.4rem;
+  align-items:flex-start;
+}
+#page2-left h2 { font-family: var(--ff-canopee); font-size: clamp(48px, 10vw, 150px); line-height: 0.95; font-weight:100; margin:0; color: var(--bg-dark); }
+#page2-left h2 span { font-weight:900; font-size: clamp(60px, 12vw, 210px); display:inline-block; color: var(--bg-dark); }
+#page2-left img { width:100%; aspect-ratio: 3/2; object-fit: cover; border-radius:10px; box-shadow: var(--shadow-soft); }
+#page2-left p { font-family: var(--ff-domain); font-size: clamp(16px,1.4vw,34px); color: var(--muted); line-height:1.6; margin-top: 0.6rem; }
+
+/* right column */
+#page2-right {
+  width: clamp(60%, 62%, 66%);
+  display:flex;
+  flex-direction:column;
+  gap: 1.2rem;
+  align-items: flex-start;
+  padding-left: clamp(18px, 3vw, 40px);
+}
+#page2-right img { width:100%; aspect-ratio: 16/9; object-fit: cover; border-radius:10px; box-shadow: var(--shadow-strong); }
+#page2-right h1 { font-family: var(--ff-canopee); font-size: clamp(32px, 4.6vw, 140px); font-weight: 100; letter-spacing:-0.02em; color: var(--bg-dark); margin:0; line-height:1.02; }
+
+/* subtle 3D tilt on pointer move (JS can enhance) */
+.js-tilt { transform-style: preserve-3d; perspective: 1000px; will-change: transform; }
+
+/* ---------------- PAGE 3 (wide typographic section) ---------------- */
+#page3 {
+  position: relative;
+  background: var(--bg-main);
+  padding: clamp(48px, 8vh, 120px) clamp(18px, 4vw, 80px);
+  overflow: visible;
+  display:flex;
+  align-items:center;
+}
+#page3 h1 { font-family: var(--ff-canopee); font-size: clamp(120px, 22vw, 420px); font-weight:100; background: var(--bg-dark); color: var(--bg-main); padding: 0.4rem 2rem; border-radius: 12px; line-height:0.85; margin-left: clamp(10px, 2vw, 60px); }
+#page3 img { position: absolute; top: 8%; right: 4%; height: clamp(120px, 22vw, 420px); width: auto; transform-origin:center; transition: transform 0.9s var(--ease-slow); filter: drop-shadow(0 12px 30px rgba(0,0,0,0.15)); }
+#page3 img:hover { transform: rotate(6deg) scale(1.03); }
+
+/* ---------------- PAGE 4 ---------------- */
+#page4 {
+  min-height: 100vh;
+  width: 100%;
+  display:flex;
+  gap: clamp(20px, 3vw, 60px);
+  padding: clamp(32px, 6vh, 90px) clamp(18px, 4vw, 80px);
+  align-items: center;
+  background: var(--bg-main);
+}
+#page4-left { flex: 0 0 clamp(55%, 60%, 65%); padding: 0; }
+#page4-left img { width:100%; height:100%; object-fit: cover; aspect-ratio: 4/5; border-radius:12px; box-shadow: var(--shadow-strong); transition: transform 0.9s var(--ease-slow); }
+#page4-left img:hover { transform: translateY(-8px) scale(1.02); }
+#page4-right { flex:1; padding-left: clamp(12px, 3vw, 40px); display:flex; flex-direction:column; justify-content: center; gap:1.2rem; }
+#page4-right p { font-family: var(--ff-domain); font-size: clamp(16px, 1.6vw, 34px); line-height:1.5; color: var(--muted); margin-bottom: 1rem; }
+
+/* round action card */
+#anda {
+  width: 100%;
+  max-width: 420px;
+  height: clamp(220px, 28vh, 300px);
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(202,193,182,0.95), rgba(202,193,182,0.9));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 1rem;
+  overflow:hidden;
+  border: 1px solid rgba(0,0,0,0.12);
+  transform: translateZ(0);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.6s var(--ease-slow), box-shadow 0.6s var(--ease-fast);
+}
+#anda img { height: clamp(48px, 6vh, 80px); transform: translateX(-120%); transition: transform 0.6s var(--ease-slow); }
+#anda h1 { font-family: var(--ff-canopee); font-size: clamp(48px, 6vw, 100px); font-weight:100; transform: translateX(-26%); transition: transform 0.6s var(--ease-slow); }
+#anda:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--shadow-strong); }
+#anda:hover img { transform: translateX(12%); }
+#anda:hover h1 { transform: translateX(10%); }
+
+/* ---------------- PAGE 6 (placeholder) ---------------- */
+#page6 { min-height: 100px; background: linear-gradient(180deg, rgba(196,188,179,0.8), rgba(28,28,25,0.04)); display:flex; align-items:center; justify-content:center; padding: clamp(40px, 6vh, 80px); }
+
+/* ---------------- RESPONSIVE BREAKPOINTS ---------------- */
+@media (max-width: 1200px){
+  #page2-left h2 { font-size: clamp(42px, 9.5vw, 120px); }
+  #page2-left h2 span { font-size: clamp(50px, 10vw, 180px); }
+  #page3 h1 { font-size: clamp(80px, 18vw, 320px); }
+}
+
+@media (max-width: 900px){
+  /* stack page2 */
+  #page2 { flex-direction: column; padding: clamp(24px, 4vh, 48px) 6vw; min-height: auto; gap: var(--space-lg); }
+  #page2-left, #page2-right { width: 100%; border-right:none; padding:0; }
+  #page1 h1 { margin-top: clamp(1rem, 3vh, 3rem); }
+
+  /* elems becomes column */
+  #elems { flex-direction: column; align-items: center; }
+  #elem1, #elem2, #elem3 { width: 100%; }
+  #page3 img { position: static; margin: 2rem auto 0; display:block; width: 60%; height: auto; }
+}
+
+@media (max-width: 600px){
+  #page1 h1 { font-size: clamp(48px, 20vw, 120px); padding: 0.2rem 1rem; }
+  #page2-left h2 { font-size: clamp(36px, 16vw, 80px); }
+  #elem1 p, #elem3 p { font-size: clamp(13px, 3.6vw, 16px); }
+  #anda h1 { font-size: clamp(28px, 8vw, 48px); }
+  #page3 h1 { font-size: clamp(48px, 18vw, 120px); margin-left: 0; padding: 0.2rem 1rem; }
+  #page5 .marquee-item { font-size: clamp(34px, 10vw, 56px); }
+}
+
+/* ---------------- REDUCED MOTION (ACCESSIBILITY) ---------------- */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+/* ---------------- NOTES for JS/GSAP integration (keep in file for dev) ----------------
+- Add `data-scroll` attributes on elements you want Locomotive to manage.
+- For entrance reveals, add class `.js-anim` to elements and animate opacity/translate via GSAP.
+- Use `.js-tilt` on images to enable small 3D tilt via pointer movement (JS).
+- Replace CSS marquee by GSAP timeline for performant continuous scroll when integrating.
+-------------------------------------------------------------- */
+
+#page5 {
+    padding: 25px 0;
+    width: 100%;
+    background-color: #C4BCB3;
+    border-top: 1px solid #2f2f2f;
+    border-bottom: 1px solid #2f2f2f;
+
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+#page5::-webkit-scrollbar {
+    display: none;
+}
+
+#page5 h1 {
+    font-size: 100px;
+    font-family: domain;
+    font-weight: 100;
+    display: inline-block;
+    /* background-color: red; */
+    animation-timing-function: linear;
+    margin-right: 30px;
+    animation-name: scroll;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+#page5 h1 span {
+    font-family: canopee;
+    background-color: #1b1b1b;
+    color: #C4BCB3;
+    padding: 0 12px;
+}
+
+#page6 {
+    height: 100px;
+    width: 100%;
+    background-color: #C4BCB3;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-100% - 34px));
+    }
+}
+
+#page5:hover h1{
+    animation-play-state: paused;
+}
+
+/* -----------------------------------------------------------
+   LUXURY INTERACTION SUITE — FINAL VERSION
+   Adds cinematic micro-interactions + metallic hero shimmer
+   ----------------------------------------------------------- */
+
+/* Universal Transition Enhancer */
+h1, h2, h3, h4, p, a, span, img {
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, color, opacity, filter;
+}
+
+/* Text Glow + Sheen on Hover */
+h1:hover, h2:hover, h3:hover, h4:hover {
+  transform: translateY(-4px) scale(1.02);
+  color: var(--accent);
+  text-shadow: 0 0 25px rgba(180,59,18,0.25);
+}
+
+/* Paragraph Subtle Lift */
+p:hover {
+  transform: translateY(-3px);
+  color: rgba(0,0,0,0.75);
+}
+
+/* Image Luxury Depth (soft sheen overlay) */
+#image-div, .thumb, .case-thumb {
+  position: relative;
+  overflow: hidden;
+}
+#image-div::after, .thumb::after, .case-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(75deg, transparent 0%, rgba(255,255,255,0.15) 40%, transparent 80%);
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: transform 1.2s var(--ease-slow), opacity 0.6s var(--ease-fast);
+  pointer-events: none;
+}
+#image-div:hover::after, .thumb:hover::after, .case-thumb:hover::after {
+  opacity: 1;
+  transform: translateX(120%);
+}
+
+/* Image Pop & Tilt Hover */
+#image-div:hover img, .thumb:hover img, .case-thumb:hover img {
+  transform: scale(1.08) rotate3d(0, 1, 0, 4deg);
+  filter: brightness(1.08) contrast(1.04) saturate(1.05);
+}
+
+/* Buttons & CTA Magnetic Feel */
+#anda, .btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.6s var(--ease-slow);
+}
+#anda::before, .btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.2), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-fast);
+}
+#anda:hover::before, .btn:hover::before { opacity: 1; }
+#anda:hover, .btn:hover { transform: translateY(-6px) scale(1.03); }
+#anda:hover img, #anda:hover h1, .btn:hover { transform: translateX(6%) scale(1.02); }
+
+/* Fade-in Animation (for GSAP fallback) */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s var(--ease-slow), transform 1s var(--ease-slow);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card Hover Motion */
+#elem1:hover, #elem3:hover {
+  transform: translateY(-10px);
+}
+#elem1:hover h4 span, #elem3:hover h4 span {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 5px 20px rgba(180,59,18,0.3);
+}
+
+/* Luxury Cursor Highlight Effect (ambient soft light) */
+body::after {
+  content: "";
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  transition: opacity 0.3s ease;
+  mix-blend-mode: soft-light;
+  opacity: 0;
+}
+body:hover::after { opacity: 1; }
+
+/* ---------------- PREMIUM HERO LABEL ---------------- */
+#page1 h1 {
+  align-self: center;
+  font-family: var(--ff-canopee);
+  font-size: clamp(80px, 16vw, 300px);
+  font-weight: 100;
+  line-height: 0.85;
+  color: transparent;
+  background: linear-gradient(90deg, #1C1C19, #B43B12, #FF8A4B, #1C1C19);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 0.4rem 2rem;
+  border-radius: 10px;
+  margin-top: clamp(2rem, 4vh, 6rem);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  transition: transform 0.8s var(--ease-slow), filter 1s var(--ease-slow);
+  animation: luxuryIdle 10s ease-in-out infinite alternate;
+  cursor: none; /* hides default cursor for cinematic look */
+  
+}
+
+/* Metallic idle shimmer */
+@keyframes luxuryIdle {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Cursor-reactive light overlay */
+#page1 h1::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.35), transparent 60%);
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-fast);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Hover activation */
+#page1 h1:hover {
+  transform: translateY(-8px) scale(1.03);
+  filter: brightness(1.05) contrast(1.1);
+}
+#page1 h1:hover::after { opacity: 1; }
+/* ---------- Premium Social Links ---------- */
+.socials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.4rem;
+  margin-top: 2rem;
+  font-family: var(--ff-domain);
+}
+
+.social-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--bg-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+}
+
+/* Icon styling */
+.social-link i {
+  font-size: 1.6rem;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Animated gradient ring behind icons */
+.social-link::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from 180deg, #B43B12, #FF8A4B, #B43B12);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: 0;
+}
+.social-link span,
+.social-link i {
+  position: relative;
+  z-index: 2;
+}
+
+/* Hover effects */
+.social-link:hover {
+  color: #fff;
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 40px rgba(180, 59, 18, 0.25);
+}
+.social-link:hover::before {
+  opacity: 1;
+}
+.social-link:hover i {
+  transform: rotate(12deg) scale(1.1);
+}
+
+/* GitHub-specific tone */
+.social-link.github {
+  background: rgba(34, 34, 34, 0.85);
+  color: #f3f3f3;
+}
+.social-link.github:hover {
+  background: linear-gradient(90deg, #0d1117, #24292f);
+  box-shadow: 0 14px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* LinkedIn-specific tone */
+.social-link.linkedin {
+  background: rgba(10, 102, 194, 0.15);
+  color: #0a66c2;
+}
+.social-link.linkedin:hover {
+  background: linear-gradient(90deg, #0a66c2, #1f8ff2);
+  box-shadow: 0 14px 50px rgba(10, 102, 194, 0.35);
+}
+
+/* Luxury light trace animation on hover */
+.social-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease;
+  z-index: 1;
+}
+.social-link:hover::after {
+  opacity: 1;
+  transform: translateX(100%);
+}
